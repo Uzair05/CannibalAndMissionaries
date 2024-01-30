@@ -1,3 +1,6 @@
+main
+main.exe
+
 # Created by https://www.toptal.com/developers/gitignore/api/linux,macos,windows,c++,c,visualstudiocode,clion,jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,windows,c++,c,visualstudiocode,clion,jetbrains
 
@@ -284,7 +287,8 @@ fabric.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
