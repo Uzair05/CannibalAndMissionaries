@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 struct Node {
@@ -56,15 +57,14 @@ std::vector<Node> findSol(Node head, bool boatOnLeft = true) {
                                possible_combinations.end(),
                                [](Node& n) { return (n.C + n.M) == 0; });
         it != possible_combinations.end()) {
-        solution.push_back(*it);
+        solution.push_back(std::move(*it));
+
     } else {
         for (const auto& pc : possible_combinations) {
             auto s = findSol(pc, !boatOnLeft);
             if (s.size() > 0) {
-                solution.push_back(pc);
-                for (const auto& s_ : s) {
-                    solution.push_back(s_);
-                }
+                solution.push_back(std::move(pc));
+                for (const auto& s_ : s) solution.push_back(std::move(s_));
                 break;
             }
         }
@@ -77,9 +77,13 @@ int main() {
     Node start_situation;
     auto i = findSol(start_situation);
 
+    bool boatOnLeft = false;
     for (const auto& c : i) {
-        std::cout << "C: " << c.C << ", M: " << c.M << "\t\t";
-        std::cout << "C: " << 3 - c.C << ", M: " << 3 - c.M << "\n";
+        std::cout << "C: " << c.C << ", M: " << c.M << (boatOnLeft ? " B" : "")
+                  << "\t\t";
+        std::cout << (!boatOnLeft ? "B " : "  ") << "C: " << 3 - c.C
+                  << ", M: " << 3 - c.M << "\n";
+        boatOnLeft = !boatOnLeft;
     }
 
     return 0;
